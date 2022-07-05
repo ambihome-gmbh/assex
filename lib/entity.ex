@@ -12,7 +12,7 @@ defmodule Entity do
   - it keeps track of its state (someone may turn on the wall-lamp using a light-switch)
     - this may be done by polling the state of the device (see `@callback do_poll` and its implementation in the [File Entity](lib/entity/file.ex))
     - or (better, if possible) the entity reacts to pushed state changes (e.g. the Hue Bridge pushes state changes using SSE)
-  - when the state changes the entity fires a `state-changed` event on the event-bus. This is called the "state-machine" in HASS. See `update_state/2'
+  - when the state changes, the entity fires a `state-changed` event on the event-bus. See `update_state/2' (This is called the "state-machine" in HASS)
   - it may offer services (`turn_on`, `turn_off`)
 
   On creation (`new/4`)
@@ -23,10 +23,10 @@ defmodule Entity do
 
   The `do_poll` callback is called with the given interval (or not, if no interval given)
 
-  On receive of a `:service_call` event the `service_call/3`-callback is called. (see [Service.Call](lib/service/call.ex))
+  On receive of a `service-call` event the `service_call/3`-callback is called. (see [Service.Call](lib/service/call.ex))
 
   On a state change the implementing entity has to call `update_state/2` (see [do_poll in File Entity](lib/entity/file.ex)).
-  `update_state/2` which will check if the state has changed and if so, update the entity in the DB and also fire an event.
+  `update_state/2` will check if the state has changed and if so, update the entity in the DB and also fire an event.
 
   """
 

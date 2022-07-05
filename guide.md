@@ -1,11 +1,11 @@
 # A little developers Guide
 
-This is the POC for a smart-home hub. The implementation is inspired by https://www.home-assistant.io/. The software is not useful for anything at the moment but is and will be licensed under the same terms as https://www.home-assistant.io/ as it reuses it's domain model.
+> This is the POC for a smart-home hub. The implementation is inspired by HASS, https://www.home-assistant.io/. The software is not useful for anything at the moment. It is and will be licensed under the same terms as https://www.home-assistant.io/ as it reuses its domain model.
 
 The purpose of a hub is to connect different real world services and devices and to make them work together.
 Devices and services are abstracted in `Entities`.
 
-For example you could write a `File`- Entity that watches a file and if that file gets deleted another entity reacts and switches on some light.
+For example you could write a `File`- Entity that watches a file and if that file gets deleted, another entity reacts and switches on some light.
 
 ## applied Elixir modules
 
@@ -28,7 +28,7 @@ Understanding of these terms is needed to dive in:
 A sequence of events starts with 
  - an Entity detects a state-change (see [Entity](lib/entity.ex)) OR ...
  - a service call is executed (either received on the event-bus, eg from extern via MQTT or directly called from an Automation or Entity). (see [Service](lib/service.ex), [Serivce.Call](lib/service/call.ex), [test "service calls"](test/entity/simple_test.exs))
-   - an Entity exececutes the call, its state may change
+   - an Entity executes the call, its state may change
  - an `state-changed` event is fired
  - some other event may be fired
  - some Automation may react to the event

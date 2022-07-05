@@ -5,7 +5,7 @@ defmodule Service.Call do
 
   The module provides
 
-  - the `Serivce.Call` struct which should* contain a valid (exisiting service, valid selector, valid args) service call.
+  - the `Serivce.Call` struct which should* contain a valid (existing service, valid selector, valid args) service call.
   - `new` method to create a `Serivce.Call` normally from JSON.
   - `call` method which is either
     - used by `Service` to perform a call received over the event-bus
