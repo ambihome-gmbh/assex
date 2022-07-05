@@ -40,7 +40,7 @@ defmodule Entity.SimpleTest do
     test_cast_by_selector({:and, {:==, :domain, "domain1"}, {:==, :area, "area1"}})
   end
 
-  test "snested selector" do
+  test "nested selector" do
     test_cast_by_selector({
       :and,
       {:or, {:==, :domain, "domain1"}, {:==, :domain, "domain2"}},

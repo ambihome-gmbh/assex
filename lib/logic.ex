@@ -1,4 +1,7 @@
 defmodule Logic do
+  @moduledoc """
+  Ignore for now.
+  """
   use GenServer
 
   def new(config, modules) do
@@ -52,7 +55,7 @@ defmodule Logic do
       [%{"action" => "service_cast", "service_cast" => service_cast}] ->
         Service.Call.call(service_cast)
 
-      result ->
+      _result ->
         raise("not implemented")
     end
   end

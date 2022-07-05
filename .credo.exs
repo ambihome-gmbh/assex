@@ -65,7 +65,10 @@
           {Credo.Check.Readability.UnnecessaryAliasExpansion, []},
           {Credo.Check.Readability.VariableNames, []},
           {Credo.Check.Readability.WithSingleClause, []},
-          {Credo.Check.Readability.Specs, []},
+          # TODO enable
+          {Credo.Check.Readability.Specs, false},
+          # TODO enable
+          {Credo.Check.Readability.ModuleDoc, false},
           {Credo.Check.Readability.NestedFunctionCalls, []},
           {Credo.Check.Readability.AliasAs, []},
           {Credo.Check.Readability.BlockPipe, []},
@@ -131,7 +134,6 @@
           {Credo.Check.Warning.UnsafeToAtom, []}
         ],
         disabled: [
-          {Credo.Check.Readability.ModuleDoc, []},
           {Credo.Check.Readability.SinglePipe, []},
           {Credo.Check.Warning.LeakyEnvironment, []},
           {Credo.Check.Refactor.AppendSingleItem, []},

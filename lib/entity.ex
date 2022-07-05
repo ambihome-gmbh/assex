@@ -1,4 +1,35 @@
 defmodule Entity do
+  @moduledoc """
+  A behaviour module for implementing an Entity.
+
+  An Entity represents a device or service in the real world.
+
+  An entity (example: the wall lamp in the kitchen)
+
+  - belongs to a domain (the wall lamp belongs to the `light` domain)
+  - is located in an area (kitchen)
+  - has a state (the light can be `on` or `off`)
+  - it keeps track of its state (someone may turn on the wall-lamp using a light-switch)
+    - this may be done by polling the state of the device (see `@callback do_poll` and its implementation in the [File Entity](lib/entity/file.ex))
+    - or (better, if possible) the entity reacts to pushed state changes (e.g. the Hue Bridge pushes state changes using SSE)
+  - when the state changes the entity fires a `state-changed` event on the event-bus. This is called the "state-machine" in HASS. See `update_state/2'
+  - it may offer services (`turn_on`, `turn_off`)
+
+  On creation (`new/4`)
+
+  - the entity is registered in `Registry.Entities` and can be found there using `:via`.
+  - written to Mnesia (using Memento)
+  - a `state-changed` event is fired on the event-bus
+
+  The `do_poll` callback is called with the given interval (or not, if no interval given)
+
+  On receive of a `:service_call` event the `service_call/3`-callback is called. (see [Service.Call](lib/service/call.ex))
+
+  On a state change the implementing entity has to call `update_state/2` (see [do_poll in File Entity](lib/entity/file.ex)).
+  `update_state/2` which will check if the state has changed and if so, update the entity in the DB and also fire an event.
+
+  """
+
   use Memento.Table,
     attributes: [:id, :name, :domain, :area, :state],
     index: [:domain, :area]
@@ -68,6 +99,7 @@ defmodule Entity do
 
       defp update_entity!(entity) do
         Memento.transaction!(fn -> Memento.Query.write(entity) end)
+        # TODO use fire/2 ?
         PubSub.broadcast(:event_pubsub, "state-changed", {:state_change, entity})
       end
 
@@ -105,6 +137,7 @@ defmodule Entity do
 
       # ---
 
+      # NOTE: this is the hass "state-machine"
       defp update_state(new_state, %{state: new_state} = entity) do
         entity
       end

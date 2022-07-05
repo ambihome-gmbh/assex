@@ -1,4 +1,7 @@
 defmodule Assex do
+  @moduledoc """
+  see guide.md
+  """
   @separator "."
   @replacement "_"
   @allowed_chars [?0..?9, ?a..?x, ?A..?Z, to_charlist(@separator)]

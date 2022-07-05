@@ -23,7 +23,7 @@ defmodule Assex.MixProject do
   defp deps do
     [
       {:memento, "~> 0.3.2"},
-      {:map_diff, "~> 1.3"},
+      # {:map_diff, "~> 1.3"},
       {:luerl, "~> 1.0"},
       {:phoenix_pubsub, "~> 2.0"},
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},

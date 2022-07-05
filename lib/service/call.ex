@@ -1,4 +1,24 @@
 defmodule Service.Call do
+  @moduledoc """
+
+  A service call can be seen as a simple RPC on a Entity.
+
+  The module provides
+
+  - the `Serivce.Call` struct which should* contain a valid (exisiting service, valid selector, valid args) service call.
+  - `new` method to create a `Serivce.Call` normally from JSON.
+  - `call` method which is either
+    - used by `Service` to perform a call received over the event-bus
+    - or directly by some code to issue a service call.
+
+  Note, that the `selector` field may be an Entity-ID or a Memento select guard (selector), see: https://hexdocs.pm/memento/Memento.Query.html#select/3
+  If the service-call contains a selector, the selector is resolved into Entity-IDs and a new list of service-call, one for each resolved ID is created.
+
+  ---
+
+  *) not really, better validation is needed some time.
+  """
+
   use TypedStruct
 
   @type service :: atom
@@ -61,7 +81,8 @@ defmodule Service.Call do
     end
   end
 
-  # TODO ??
+  # TODO - I do not understand why dialyzer complains here...
+
   # lib/service/call.ex:64:no_return
   # Function call/2 has no local return.
   # ________________________________________________________________________________
@@ -98,9 +119,12 @@ defmodule Service.Call do
   @spec resolve_selector(t) :: [t]
   def resolve_selector(%__MODULE__{selector: selector} = service_call) do
     if is_binary(selector) do
+      # this seems to be an Enitity-ID
       [service_call]
     else
-      service_call.selector
+      # selector is a Memento Query selector.
+      # Flatten the service-call to a call to each selected Enity-ID.
+      selector
       |> Service.Selector.select_entity_ids()
       |> Enum.map(&%{service_call | selector: &1, method_: :cast})
     end

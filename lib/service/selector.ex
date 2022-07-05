@@ -1,4 +1,9 @@
 defmodule Service.Selector do
+  @moduledoc """
+  Wrapper around `Memento.Query.select` to allow to select entities by ID/domain/area.
+  Also provides a decoder for json-encoded selectors.
+  """
+
   @type query_selector :: list(tuple) | tuple
   @type t :: query_selector | Entity.id()
 
