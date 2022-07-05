@@ -26,14 +26,14 @@ Understanding of these terms is needed to dive in:
 ## Flow
 
 A sequence of events starts with 
- - an Entity detects a state-change (see [@moduledoc in](lib/Entity.ex)) OR ...
- - a service call is executed (either received on the event-bus, eg from extern via MQTT or directly called from an Automation or Entity). (see [Service](lib/Service.ex), [Serivce.Call](lib/service/call.ex), [test "service calls" in](test/entity/simple_test.exs))
+ - an Entity detects a state-change (see [Entity](lib/entity.ex)) OR ...
+ - a service call is executed (either received on the event-bus, eg from extern via MQTT or directly called from an Automation or Entity). (see [Service](lib/service.ex), [Serivce.Call](lib/service/call.ex), [test "service calls"](test/entity/simple_test.exs))
    - an Entity exececutes the call, its state may change
- - an `state-changed` event is sent
- - some other event may be sent
+ - an `state-changed` event is fired
+ - some other event may be fired
  - some Automation may react to the event
 
-See tests and `priv/demo.exs` for some examples.
+See the [File Entity](lib/entity/file.ex), the [tests](test) and the [Demo](priv/demo.exs) for some examples.
 
 ## Getting started
 
